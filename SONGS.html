@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXO Songs</title>
+
+    <style>
+        /* GENERAL DESIGN */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-color: #050505;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.8;
+            background-image:
+                linear-gradient(
+                    rgba(5, 5, 5, 0.88),
+                    rgba(5, 5, 5, 0.95)
+                ),
+                url("exo-background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 50px 20px 30px 20px;
+            background: linear-gradient(
+                135deg,
+                #050505,
+                #1a1a1a,
+                #050505
+            );
+            border-bottom: 2px solid #c0c0c0;
+        }
+
+        header h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 45px;
+            letter-spacing: 6px;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(192, 192, 192, 0.5);
+            margin: 0 0 15px 0;
+        }
+
+        /* NAVIGATION MENU */
+        nav {
+            background-color: rgba(15, 15, 15, 0.96);
+            text-align: center;
+            padding: 18px 10px;
+            border-bottom: 1px solid #777777;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 8px;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #b9e8ff;
+            text-shadow: 0 0 10px #70cfff;
+        }
+
+        /* MAIN CONTENT */
+        main {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .intro-section {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(15, 15, 15, 0.85);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #555;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .intro-section h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 30px;
+            color: #e5e5e5;
+            letter-spacing: 2px;
+            margin-top: 0;
+        }
+
+        .intro-section p {
+            color: #cccccc;
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+
+        /* SONGS GRID CONTAINER */
+        .songs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        /* SONG CARD DESIGN */
+        .song-box {
+            background: rgba(18, 18, 18, 0.92);
+            border: 1px solid #444;
+            border-left: 4px solid #b515b8;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .song-box:hover {
+            transform: translateY(-5px);
+            border-color: #c0c0c0;
+            border-left-color: #e371e6;
+            box-shadow: 0 8px 25px rgba(181, 21, 184, 0.25);
+        }
+
+        .song-box h3 {
+            margin-top: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 22px;
+            color: #f0c2f2;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+
+        .song-box p {
+            font-size: 14px;
+            color: #d0d0d0;
+            margin: 10px 0;
+        }
+
+        .song-box strong {
+            color: #ffffff;
+        }
+
+        .lyric-quote {
+            font-style: italic;
+            color: #b9e8ff;
+            background: rgba(112, 207, 255, 0.05);
+            padding: 8px 12px;
+            border-left: 2px solid #70cfff;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .search-note {
+            font-size: 12px;
+            color: #888888;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            background: #080808;
+            padding: 25px 15px;
+            border-top: 2px solid #c0c0c0;
+            color: #bbbbbb;
+            font-size: 14px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        /* MOBILE RESPONSIVE TWEAKS */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 30px;
+                letter-spacing: 3px;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 5px 6px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>EXO Iconic Songs</h1>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="exo.html">EXO MEMBERS</a>
+        <a href="gallery.html">GALLERY</a>
+        <a href="songs.html" class="active">SONGS</a>
+        <a href="about.html">ABOUT US</a>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <div class="intro-section">
+            <h2>My Favorite EXO Tracks</h2>
+            <p>Here is a list of some of EXO's most legendary title tracks and what they are about.</p>
+        </div>
+
+        <div class="songs-grid">
+
+            <!-- SONG 1 -->
+            <div class="song-box">
+                <h3>1. Growl (으르렁)</h3>
+                <p><strong>Released:</strong> 2013 (XOXO Repackage)</p>
+                <p><strong>Theme:</strong> A smooth R&B dance track about a man warning other guys to back away from the person he loves, using animalistic jealousy as a metaphor.</p>
+                <div class="lyric-quote">"Got a feeling, baby, I'm going crazy..."</div>
+                <p class="search-note"><small>Find full licensed lyrics by searching for "EXO Growl lyrics" on Google.</small></p>
+            </div>
+
+            <!-- SONG 2 -->
+            <div class="song-box">
+                <h3>2. Monster</h3>
+                <p><strong>Released:</strong> 2016 (EX'ACT)</p>
+                <p><strong>Theme:</strong> A dark, intense pop song depicting an obsessive, powerful love where the narrator acts like a "monster" to protect and hold onto his lover despite everything.</p>
+                <div class="lyric-quote">"She got me going crazy..."</div>
+                <p class="search-note"><small>Find full licensed lyrics by searching for "EXO Monster lyrics" on Google.</small></p>
+            </div>
+
+            <!-- SONG 3 -->
+            <div class="song-box">
+                <h3>3. Love Shot</h3>
+                <p><strong>Released:</strong> 2018 (Don't Mess Up My Tempo Repackage)</p>
+                <p><strong>Theme:</strong> A sleek, addictive pop-dance track about breaking through the empty noise and cynicism of the world to find genuine, life-changing love.</p>
+                <div class="lyric-quote">"Yeah, yeah, love shot..."</div>
+                <p class="search-note"><small>Find full licensed lyrics by searching for "EXO Love Shot lyrics" on Google.</small></p>
+            </div>
+
+            <!-- SONG 4 -->
+            <div class="song-box">
+                <h3>4. Call Me Baby</h3>
+                <p><strong>Released:</strong> 2015 (EXODUS)</p>
+                <p><strong>Theme:</strong> An upbeat, energetic R&B and pop track celebrating the explosive awakening of love when someone special finally calls out to them.</p>
+                <div class="lyric-quote">"Call me baby, call me baby..."</div>
+                <p class="search-note"><small>Find full licensed lyrics by searching for "EXO Call Me Baby lyrics" on Google.</small></p>
+            </div>
+
+            <!-- SONG 5 -->
+            <div class="song-box">
+                <h3>5. Ko Ko Bop</h3>
+                <p><strong>Released:</strong> 2017 (The War)</p>
+                <p><strong>Theme:</strong> A vibrant reggae-pop track encouraging people to forget their worries, let loose, and dance through the night right before the world ends.</p>
+                <div class="lyric-quote">"Shabalababingbing..."</div>
+                <p class="search-note"><small>Find full licensed lyrics by searching for "EXO Ko Ko Bop lyrics" on Google.</small></p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Author: Mizy Carillo<br>Year: 2026<br>Topic: EXO Songs</p>
+        <p>&copy; 2026 EXO Fan Page. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXO COMEBACK - GALLERY</title>
+
+    <style>
+        /* GENERAL DESIGN */
+        :root {
+            --bg-overlay: rgba(0, 0, 0, 0.82);
+            --bg-overlay-deep: rgba(0, 0, 0, 0.94);
+            --card-bg: rgba(15, 15, 15, 0.90);
+            --card-border: #777777;
+            --text-color: #ffffff;
+            --text-muted: #d0d0d0;
+            --accent-color: #b9e8ff;
+            --accent-glow: #70cfff;
+            --header-bg: linear-gradient(135deg, #050505, #202020, #050505);
+            --modal-bg: rgba(20, 20, 25, 0.96);
+        }
+
+        [data-theme="light"] {
+            --bg-overlay: rgba(240, 240, 245, 0.85);
+            --bg-overlay-deep: rgba(245, 245, 250, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --card-border: #cccccc;
+            --text-color: #111111;
+            --text-muted: #444444;
+            --accent-color: #0077b6;
+            --accent-glow: #0096c7;
+            --header-bg: linear-gradient(135deg, #e0e0e0, #f5f5f5, #e0e0e0);
+            --modal-bg: rgba(255, 255, 255, 0.98);
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            background-color: #050505;
+            color: var(--text-color);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.8;
+            background-image:
+                linear-gradient(
+                    var(--bg-overlay),
+                    var(--bg-overlay-deep)
+                ),
+                url("exo-background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 55px 20px;
+            background: var(--header-bg);
+            border-bottom: 2px solid #c0c0c0;
+            position: relative;
+        }
+
+        header h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 55px;
+            letter-spacing: 8px;
+            color: var(--text-color);
+            text-shadow: 0 0 15px #c0c0c0;
+            margin: 0;
+        }
+
+        header p {
+            color: var(--text-muted);
+            letter-spacing: 4px;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* NAVIGATION MENU */
+        nav {
+            background-color: rgba(15, 15, 15, 0.96);
+            text-align: center;
+            padding: 18px 10px;
+            border-bottom: 1px solid #777777;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 8px;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #b9e8ff;
+            text-shadow: 0 0 10px #70cfff;
+        }
+
+        .theme-toggle-btn {
+            background: transparent;
+            border: 1px solid #c0c0c0;
+            color: #ffffff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .theme-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #b9e8ff;
+        }
+
+        /* MAIN CONTENT & CONTROLS */
+        main {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .controls-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-left: 4px solid #c0c0c0;
+            border-radius: 8px;
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1.2rem;
+            border-radius: 25px;
+            border: 1px solid var(--card-border);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            color: var(--text-color);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #c0c0c0;
+            color: #050505;
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+        }
+
+        /* GALLERY GRID */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.8rem;
+            width: 100%;
+        }
+
+        .member-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .member-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px rgba(192, 192, 192, 0.3);
+            border-color: #c0c0c0;
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 340px;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .card-img-wrapper img,
+        .card-img-wrapper svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .member-card:hover .card-img-wrapper img,
+        .member-card:hover .card-img-wrapper svg {
+            transform: scale(1.05);
+        }
+
+        .power-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 1px solid #c0c0c0;
+            z-index: 2;
+        }
+
+        .card-info {
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .card-info h3 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            border-bottom: none;
+            padding-bottom: 0;
+            color: var(--text-color);
+        }
+
+        .card-info p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .role-tags {
+            display: flex;
+            justify-content: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .role-tag {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            background: rgba(192, 192, 192, 0.15);
+            color: var(--accent-color);
+            border: 1px solid var(--card-border);
+            font-weight: 600;
+        }
+
+        /* MODAL STYLES */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background: var(--modal-bg);
+            border: 2px solid #c0c0c0;
+            width: 90%;
+            max-width: 650px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 35px rgba(192, 192, 192, 0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+            color: var(--text-color);
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            .modal-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal-img-container {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 280px;
+            border: 1px solid var(--card-border);
+            background: #111;
+        }
+
+        .modal-img-container img,
+        .modal-img-container svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-details h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .modal-details h4 {
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .detail-row {
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .detail-row strong {
+            color: var(--accent-color);
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            background: #080808;
+            padding: 25px 15px;
+            border-top: 2px solid #c0c0c0;
+            color: #bbbbbb;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        /* MOBILE RESPONSIVE DESIGN */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 34px;
+                letter-spacing: 4px;
+            }
+
+            header p {
+                font-size: 11px;
+                letter-spacing: 2px;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 5px 8px;
+            }
+
+            main {
+                padding: 15px;
+            }
+
+            .controls-section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>EXO GALLERY</h1>
+        <p>WE ARE ONE • EXO PLANET</p>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="exo.html">EXO MEMBERS</a>
+        <a href="gallery.html" class="active">GALLERY</a>
+        <a href="songs.html">SONGS</a>
+        <a href="about.html">ABOUT US</a>
+        <button class="theme-toggle-btn" id="themeToggle">🌓 Theme</button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <section class="controls-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search EXO members or powers...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="vocal">Vocals</button>
+                <button class="filter-btn" data-filter="dance">Dancers</button>
+                <button class="filter-btn" data-filter="rap">Rappers</button>
+            </div>
+        </section>
+
+        <section class="gallery-container" id="galleryGrid"></section>
+    </main>
+
+    <!-- Member Details Modal -->
+    <div class="modal-overlay" id="memberModal">
+        <div class="modal-card">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #777777; margin: 0;">
+
+    <!-- FOOTER -->
+    <footer>
+        <p>
+            Author: Mizy Carillo<br>
+            Year: 2026<br>
+            Topic: EXO K-POP GROUP
+        </p>
+        <p>
+            Copyright ©KProfiles 2026
+        </p>
+    </footer>
+
+    <script>
+        const members = [
+            {
+                name: "Xiumin",
+                realName: "Kim Min-seok (김민석)",
+                image: "xiumin.jpg",
+                number: "99",
+                power: "Frost (지빙)",
+                subUnits: ["EXO-M", "EXO-CBX"],
+                roles: ["vocal", "dance"],
+                roleLabels: ["Lead Vocalist", "Lead Dancer"],
+                color: "#70cfff",
+                birth: "March 26, 1990",
+                bio: "Oldest member known for his youthful looks, precise choreography, and clear high notes."
+            },
+            {
+                name: "Suho",
+                realName: "Kim Jun-myeon (김준면)",
+                image: "suho.jpg",
+                number: "01",
+                power: "Water (수호)",
+                subUnits: ["EXO-K"],
+                roles: ["vocal"],
+                roleLabels: ["Leader", "Lead Vocalist"],
+                color: "#38bdf8",
+                birth: "May 22, 1991",
+                bio: "The exemplary leader of EXO with smooth vocals and a strong background in musical theater."
+            },
+            {
+                name: "Lay",
+                realName: "Zhang Yixing (張藝興)",
+                image: "lay.jpg",
+                number: "10",
+                power: "Healing (치유)",
+                subUnits: ["EXO-M"],
+                roles: ["dance", "vocal"],
+                roleLabels: ["Main Dancer", "Vocalist"],
+                color: "#4ade80",
+                birth: "October 7, 1991",
+                bio: "Renowned dancer, producer, and solo artist representing EXO's multi-talented global reach."
+            },
+            {
+                name: "Baekhyun",
+                realName: "Byun Baek-hyun (변백현)",
+                image: "baekhyun.jpg",
+                number: "04",
+                power: "Light (빛)",
+                subUnits: ["EXO-K", "EXO-CBX", "SuperM"],
+                roles: ["vocal"],
+                roleLabels: ["Main Vocalist"],
+                color: "#facc15",
+                birth: "May 6, 1992",
+                bio: "Powerhouse vocal talent with immense charisma, multiple million-seller solo albums, and distinct vocal tone."
+            },
+            {
+                name: "Chen",
+                realName: "Kim Jong-dae (김종대)",
+                image: "chen.jpg",
+                number: "21",
+                power: "Lightning (번개)",
+                subUnits: ["EXO-M", "EXO-CBX"],
+                roles: ["vocal"],
+                roleLabels: ["Main Vocalist"],
+                color: "#e879f9",
+                birth: "September 21, 1992",
+                bio: "Widely regarded as one of K-pop's premier vocalists with effortless high range and emotional ballads."
+            },
+            {
+                name: "Chanyeol",
+                realName: "Park Chan-yeol (박찬열)",
+                image: "chanyeol.jpg",
+                number: "61",
+                power: "Fire (불)",
+                subUnits: ["EXO-K", "EXO-SC"],
+                roles: ["rap", "vocal"],
+                roleLabels: ["Main Rapper", "Sub Vocalist"],
+                color: "#f87171",
+                birth: "November 27, 1992",
+                bio: "Multitalented instrumentalist, song producer, and energetic main rapper with a deep, recognizable tone."
+            },
+            {
+                name: "D.O.",
+                realName: "Doh Kyung-soo (도경수)",
+                image: "do.jpg",
+                number: "12",
+                power: "Earth / Force (힘)",
+                subUnits: ["EXO-K"],
+                roles: ["vocal"],
+                roleLabels: ["Main Vocalist"],
+                color: "#fb923c",
+                birth: "January 12, 1993",
+                bio: "Smooth R&B vocalist and highly acclaimed award-winning actor across films and television series."
+            },
+            {
+                name: "Kai",
+                realName: "Kim Jong-in (김종인)",
+                image: "kai.jpg",
+                number: "88",
+                power: "Teleportation (순간이동)",
+                subUnits: ["EXO-K", "SuperM"],
+                roles: ["dance", "rap"],
+                roleLabels: ["Main Dancer", "Sub Rapper", "Center"],
+                color: "#a78bfa",
+                birth: "January 14, 1994",
+                bio: "Iconic center and master performer blending ballet, jazz, and hip-hop into powerful visual artistry."
+            },
+            {
+                name: "Sehun",
+                realName: "Oh Se-hun (오세훈)",
+                image: "sehun.jpg",
+                number: "94",
+                power: "Wind (바람)",
+                subUnits: ["EXO-K", "EXO-SC"],
+                roles: ["dance", "rap"],
+                roleLabels: ["Lead Dancer", "Lead Rapper", "Maknae"],
+                color: "#2dd4bf",
+                birth: "April 12, 1994",
+                bio: "The youngest member, known for his sharp dance style, visual presence, and charisma."
+            }
+        ];
+
+        function generateSVG(member) {
+            return `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">
+                    <defs>
+                        <linearGradient id="grad-${member.name}" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="${member.color}" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="#050505" stop-opacity="0.95"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="300" height="400" fill="url(#grad-${member.name})"/>
+                    <circle cx="150" cy="160" r="70" fill="rgba(255,255,255,0.1)" stroke="${member.color}" stroke-width="2"/>
+                    <text x="150" y="175" font-family="Georgia, serif" font-size="42" font-weight="bold" fill="#ffffff" text-anchor="middle">${member.name[0]}</text>
+                    <text x="150" y="270" font-family="Georgia, serif" font-size="26" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="2">${member.name.toUpperCase()}</text>
+                    <text x="150" y="300" font-family="Arial, sans-serif" font-size="14" fill="${member.color}" text-anchor="middle" font-weight="600">#${member.number} • ${member.power}</text>
+                </svg>
+            `;
+        }
+
+        const galleryGrid = document.getElementById('galleryGrid');
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const modal = document.getElementById('memberModal');
+        const modalBody = document.getElementById('modalBody');
+        const modalClose = document.getElementById('modalClose');
+        const themeToggle = document.getElementById('themeToggle');
+
+        let currentFilter = 'all';
+
+        function renderGallery() {
+            const query = searchInput.value.toLowerCase();
+            galleryGrid.innerHTML = '';
+
+            const filtered = members.filter(m => {
+                const matchesFilter = currentFilter === 'all' || m.roles.includes(currentFilter);
+                const matchesSearch = m.name.toLowerCase().includes(query) ||
+                                      m.realName.toLowerCase().includes(query) ||
+                                      m.power.toLowerCase().includes(query);
+                return matchesFilter && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                galleryGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 3rem;">No members match your search.</p>`;
+                return;
+            }
+
+            filtered.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'member-card';
+                card.innerHTML = `
+                    <div class="card-img-wrapper">
+                        ${generateSVG(m)}
+                        <img src="${m.image}" alt="${m.name}" onerror="this.style.display='none'">
+                        <div class="power-badge">${m.power.split(' ')[0]}</div>
+                    </div>
+                    <div class="card-info">
+                        <h3>${m.name}</h3>
+                        <p>${m.realName}</p>
+                        <div class="role-tags">
+                            ${m.roleLabels.map(r => `<span class="role-tag">${r}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                card.addEventListener('click', () => openModal(m));
+                galleryGrid.appendChild(card);
+            });
+        }
+
+        function openModal(member) {
+            modalBody.innerHTML = `
+                <div class="modal-img-container">
+                    ${generateSVG(member)}
+                    <img src="${member.image}" alt="${member.name}" onerror="this.style.display='none'">
+                </div>
+                <div class="modal-details">
+                    <h2>${member.name}</h2>
+                    <h4>${member.realName}</h4>
+                    <div class="detail-row"><strong>Jersey Number:</strong> #${member.number}</div>
+                    <div class="detail-row"><strong>Superpower:</strong> ${member.power}</div>
+                    <div class="detail-row"><strong>Sub-Units:</strong> ${member.subUnits.join(', ')}</div>
+                    <div class="detail-row"><strong>Birthday:</strong> ${member.birth}</div>
+                    <div class="detail-row" style="margin-top: 1rem;">
+                        <p style="color: var(--text-muted); line-height: 1.5;">${member.bio}</p>
+                    </div>
+                </div>
+            `;
+            modal.classList.add('active');
+        }
+
+        modalClose.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderGallery();
+            });
+        });
+
+        searchInput.addEventListener('input', renderGallery);
+
+        themeToggle.addEventListener('click', () => {
+            const isLight = document.body.getAttribute('data-theme') === 'light';
+            document.body.setAttribute('data-theme', isLight ? 'dark' : 'light');
+        });
+
+        renderGallery();
+    </script>
+</body>
+</html>
